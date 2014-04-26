@@ -71,18 +71,19 @@ public class ElectricGrid : MonoBehaviour {
 
 	void OnDrawGizmos() {
 		Gizmos.color = GlowColor;
+		var offset = new Vector3(-ElectricCellSize/2, ElectricCellSize/2, 0);
 		Gizmos.DrawLine(
-			transform.position + new Vector3(0, 0, 0),
-			transform.position + new Vector3(ElectricGridWidth * ElectricCellSize, 0, 0));
+			transform.position + new Vector3(0, 0, 0) + offset,
+			transform.position + new Vector3(ElectricGridWidth * ElectricCellSize, 0, 0) + offset);
 		Gizmos.DrawLine(
-			transform.position + new Vector3(0, 0, 0), 
-			transform.position + new Vector3(0, -ElectricGridHeight * ElectricCellSize, 0));
+			transform.position + new Vector3(0, 0, 0) + offset, 
+			transform.position + new Vector3(0, -ElectricGridHeight * ElectricCellSize, 0) + offset);
 		Gizmos.DrawLine(
-			transform.position + new Vector3(ElectricGridWidth * ElectricCellSize, 0, 0), 
-			transform.position + new Vector3(ElectricGridWidth * ElectricCellSize, -ElectricGridHeight * ElectricCellSize, 0));
+			transform.position + new Vector3(ElectricGridWidth * ElectricCellSize, 0, 0) + offset, 
+			transform.position + new Vector3(ElectricGridWidth * ElectricCellSize, -ElectricGridHeight * ElectricCellSize, 0) + offset);
 		Gizmos.DrawLine(
-			transform.position + new Vector3(0, -ElectricGridHeight * ElectricCellSize, 0), 
-			transform.position + new Vector3(ElectricGridWidth * ElectricCellSize, -ElectricGridHeight * ElectricCellSize, 0));
+			transform.position + new Vector3(0, -ElectricGridHeight * ElectricCellSize, 0) + offset, 
+			transform.position + new Vector3(ElectricGridWidth * ElectricCellSize, -ElectricGridHeight * ElectricCellSize, 0) + offset);
 
 	}
 }
