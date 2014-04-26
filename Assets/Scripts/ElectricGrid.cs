@@ -19,6 +19,11 @@ public class ElectricGrid : MonoBehaviour {
 		var collider = GetComponent<BoxCollider2D>();
 		if (!collider) {
 			collider = gameObject.AddComponent<BoxCollider2D>();
+			collider.isTrigger = true;
+		}
+		var rigidbody = GetComponent<Rigidbody2D>();
+		if (!rigidbody) {
+			rigidbody = gameObject.AddComponent<Rigidbody2D>();
 		}
 		collider.size = new Vector2(ElectricGridWidth * ElectricCellSize, ElectricGridHeight * ElectricCellSize);
 		collider.center = new Vector2((ElectricGridWidth - 1)/2f * ElectricCellSize, -(ElectricGridHeight - 1)/2f * ElectricCellSize);
