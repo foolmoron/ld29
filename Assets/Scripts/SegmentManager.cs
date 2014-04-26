@@ -47,7 +47,7 @@ public class SegmentManager : MonoBehaviour {
 			
 			if (rightmostSegmentPos.x <= segmentPositionSpawnLimit) {
 				GameObject newSegmentObj = (GameObject) Instantiate(SegmentPrefabs[Mathf.FloorToInt(Random.value * SegmentPrefabs.Length)]);
-				newSegmentObj.transform.parent = gameObject.transform;
+				newSegmentObj.transform.parent = transform;
 				newSegmentObj.transform.localPosition = new Vector3(rightmostSegmentPos.x + segmentGap, rightmostSegmentPos.y, rightmostSegmentPos.z);
 				
 				Segment newSegment = newSegmentObj.GetComponent<Segment>();

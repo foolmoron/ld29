@@ -26,13 +26,13 @@ public class Segment : MonoBehaviour {
 			"time", openTime,
 			"easeType", iTween.EaseType.easeOutElastic,
 			"isLocal", true
-			));
+		));
 		iTween.MoveTo(Bottom, iTween.Hash(
 			"position", destinationBottom,
 			"time", openTime,
 			"easeType", iTween.EaseType.easeOutElastic,
 			"isLocal", true
-			));
+		));
 	}
 
 	public void Close(float closeTime) {
