@@ -6,8 +6,6 @@ public class Segment : MonoBehaviour {
 	public GameObject Top;
 	public GameObject Bottom;
 
-	float OpenSpeed = 2;
-	float CloseSpeed = 4;
 	float OpenOffset = 2.2f;
 
 	Vector3 originalTop;
@@ -22,35 +20,31 @@ public class Segment : MonoBehaviour {
 		destinationBottom = new Vector3(originalBottom.x, originalBottom.y - OpenOffset, originalBottom.z);
 	}
 
-	public void Open() {
-		iTween.Stop(Top);
-		iTween.Stop(Bottom);
+	public void Open(float openTime) {
 		iTween.MoveTo(Top, iTween.Hash(
 			"position", destinationTop,
-			"speed", OpenSpeed,
+			"time", openTime,
 			"easeType", iTween.EaseType.easeOutElastic,
 			"isLocal", true
 			));
 		iTween.MoveTo(Bottom, iTween.Hash(
 			"position", destinationBottom,
-			"speed", OpenSpeed,
+			"time", openTime,
 			"easeType", iTween.EaseType.easeOutElastic,
 			"isLocal", true
 			));
 	}
 
-	public void Close() {
-		iTween.Stop(Top);
-		iTween.Stop(Bottom);
+	public void Close(float closeTime) {
 		iTween.MoveTo(Top, iTween.Hash(
 			"position", originalTop,
-			"speed", CloseSpeed,
+			"time", closeTime,
 			"easeType", iTween.EaseType.easeInBack,
 			"isLocal", true
 			));
 		iTween.MoveTo(Bottom, iTween.Hash(
 			"position", originalBottom,
-			"speed", CloseSpeed,
+			"time", closeTime,
 			"easeType", iTween.EaseType.easeInBack,
 			"isLocal", true
 			));
