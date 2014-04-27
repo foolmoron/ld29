@@ -18,6 +18,8 @@ public class SegmentManager : MonoBehaviour {
 
 	float segmentOpenTime = 1.5f;
 	float segmentCloseTime = 0.75f;
+
+	FollowMouse followMouse;
 	
 	public bool ActionAllowed { get; private set; }
 	public bool ScrollingAllowed { get; private set; }
@@ -26,6 +28,7 @@ public class SegmentManager : MonoBehaviour {
 	void Start() {
 		segments = new List<Segment>(GetComponentsInChildren<Segment>());
 		Object.FindObjectOfType<InputManager>().RegisterForRightClicks(gameObject);
+		followMouse = Object.FindObjectOfType<FollowMouse>();
 		
 		foreach (var slidable in GetComponentsInChildren<Slidable>()) {
 			slidable.enabled = false;
@@ -78,6 +81,7 @@ public class SegmentManager : MonoBehaviour {
 			return;
 
 		if (IsOpen) {
+			followMouse.enabled = true;
 			foreach (var segment in segments) {
 				segment.Close(segmentCloseTime);
 			}
@@ -90,6 +94,7 @@ public class SegmentManager : MonoBehaviour {
 			}
 		} else {
 			ScrollingAllowed = false;
+			followMouse.enabled = false;
 			foreach (var segment in segments) {
 				segment.Open(segmentOpenTime);
 			}
@@ -109,7 +114,8 @@ public class SegmentManager : MonoBehaviour {
 	IEnumerator WaitForAnimation(float seconds) {
 		yield return new WaitForSeconds(seconds);
 		ActionAllowed = true;
-		if (!IsOpen)
+		if (!IsOpen) {
 			ScrollingAllowed = true;
+		}
 	}
 }

@@ -9,7 +9,8 @@ public class FollowMouse : MonoBehaviour {
 	
 	public float TopLanePosition = 1.75f;
 	public float BottomLanePosition = -1.75f;
-	public float LaneSwitchBoundary = 0f;
+	public float TopSwitchBoundary = 1f;
+	public float BottomSwitchBoundary = -1f;
 	public Lane TargetLane = Lane.TOP;
 	public float LaneSwitchSpeed = 5f;
 
@@ -22,9 +23,9 @@ public class FollowMouse : MonoBehaviour {
 	void Update() {
 		var oldTarget = TargetLane;
 		var currentMousePos = camera.ScreenToWorldPoint(Input.mousePosition);
-		if (currentMousePos.y > LaneSwitchBoundary) {
+		if (currentMousePos.y > TopSwitchBoundary) {
 			TargetLane = Lane.TOP;
-		} else {
+		} else if (currentMousePos.y < BottomSwitchBoundary) {
 			TargetLane = Lane.BOTTOM;
 		}
 
@@ -47,10 +48,11 @@ public class FollowMouse : MonoBehaviour {
 
 	void OnDrawGizmos() {
 		Gizmos.color = Color.blue;
-		Gizmos.DrawLine(new Vector3(-100, TopLanePosition), new Vector3(100, TopLanePosition));
+		Gizmos.DrawLine(new Vector3(-100, TopSwitchBoundary), new Vector3(100, TopSwitchBoundary));
 		Gizmos.color = Color.red;
-		Gizmos.DrawLine(new Vector3(-100, BottomLanePosition), new Vector3(100, BottomLanePosition));
+		Gizmos.DrawLine(new Vector3(-100, BottomSwitchBoundary), new Vector3(100, BottomSwitchBoundary));
 		Gizmos.color = Color.magenta;
-		Gizmos.DrawLine(new Vector3(-100, LaneSwitchBoundary), new Vector3(100, LaneSwitchBoundary));
+		Gizmos.DrawLine(new Vector3(-100, TopLanePosition), new Vector3(100, TopLanePosition));
+		Gizmos.DrawLine(new Vector3(-100, BottomLanePosition), new Vector3(100, BottomLanePosition));
 	}
 }
