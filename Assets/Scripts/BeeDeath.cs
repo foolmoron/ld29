@@ -4,10 +4,12 @@ using System.Collections.Generic;
 
 public class BeeDeath : MonoBehaviour {
 
+	SegmentManager segmentManager;
 	BeeGuard beeGuard;
 	List<Collider2D> electricsInside = new List<Collider2D>();
 
 	void Start() {
+		segmentManager = Object.FindObjectOfType<SegmentManager>();
 		beeGuard = transform.root.GetComponentInChildren<BeeGuard>();
 	}
 	
@@ -21,7 +23,7 @@ public class BeeDeath : MonoBehaviour {
 	}
 
 	public void AttemptDie() {
-		if (beeGuard.IsInGuard || electricsInside.Count == 0)
+		if (segmentManager.IsOpen || beeGuard.IsInGuard || electricsInside.Count == 0)
 			return;
 
 		//Debug.Log("DEAD'D");

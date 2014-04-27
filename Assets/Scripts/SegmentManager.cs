@@ -38,7 +38,6 @@ public class SegmentManager : MonoBehaviour {
 		}
 
 		ActionAllowed = true;
-		ScrollingAllowed = true;
 		IsOpen = false;
 	}
 
@@ -74,6 +73,14 @@ public class SegmentManager : MonoBehaviour {
 			Destroy(segment.gameObject);
 		}
 		segmentsToKill.Clear();
+	}
+
+	public void StartScrolling() {
+		ScrollingAllowed = true;
+	}
+
+	public void StopScrolling() {
+		ScrollingAllowed = false;
 	}
 
 	void OnRightClick() {
