@@ -4,13 +4,17 @@ using System.Collections.Generic;
 
 public class BeeDeath : MonoBehaviour {
 
+	public GameObject[] ActivateOnDeath;
+
 	SegmentManager segmentManager;
 	BeeGuard beeGuard;
+	Animator[] animators;
 	List<Collider2D> electricsInside = new List<Collider2D>();
 
 	void Start() {
 		segmentManager = Object.FindObjectOfType<SegmentManager>();
 		beeGuard = transform.root.GetComponentInChildren<BeeGuard>();
+		animators = transform.root.GetComponentsInChildren<Animator>();
 	}
 	
 	void OnTriggerEnter2D(Collider2D other) {
@@ -26,6 +30,12 @@ public class BeeDeath : MonoBehaviour {
 		if (segmentManager.IsOpen || beeGuard.IsInGuard || electricsInside.Count == 0)
 			return;
 
-		//Debug.Log("DEAD'D");
+		segmentManager.StopScrolling();
+		foreach (var obj in ActivateOnDeath) {
+			obj.SetActive(true);
+		}
+		foreach (var animator in animators) {
+			animator.Play("Dead");
+		}
 	}
 }
