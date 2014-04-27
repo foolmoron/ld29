@@ -24,6 +24,6 @@ public class BeeDeath : MonoBehaviour {
 		if (beeGuard.IsInGuard || electricsInside.Count == 0)
 			return;
 
-		Debug.Log("DEAD'D");
+		//Debug.Log("DEAD'D");
 	}
 }
