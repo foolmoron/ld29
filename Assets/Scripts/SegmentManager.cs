@@ -110,7 +110,7 @@ public class SegmentManager : MonoBehaviour {
 			foreach (var segment in segments) {
 				segment.Close(segmentCloseTime);
 			}
-			StartCoroutine(WaitForAnimation(segmentCloseTime));
+			StartCoroutine(WaitForAnimation(segmentCloseTime, true));
 			foreach (var electricGrid in GetComponentsInChildren<ElectricGrid>()) {
 				electricGrid.TurnOn();
 			}
@@ -126,7 +126,7 @@ public class SegmentManager : MonoBehaviour {
 			foreach (var segment in segments) {
 				segment.Open(segmentOpenTime);
 			}
-			StartCoroutine(WaitForAnimation(segmentOpenTime));
+			StartCoroutine(WaitForAnimation(segmentOpenTime, false));
 			ScrollingAllowed = false;
 			honeyBar.StopParticles();
 			foreach (var electricGrid in GetComponentsInChildren<ElectricGrid>()) {
@@ -140,13 +140,15 @@ public class SegmentManager : MonoBehaviour {
 			}
 		}
 		ActionAllowed = false;
-		IsOpen = !IsOpen;
+		if (!IsOpen) // go into open state instantly
+			IsOpen = true;
 	}
 
-	IEnumerator WaitForAnimation(float seconds) {
+	IEnumerator WaitForAnimation(float seconds, bool closing) {
 		yield return new WaitForSeconds(seconds);
 		ActionAllowed = true;
-		if (!IsOpen) {
+		if (closing) {
+			IsOpen = false; // wait until animation is done to go into closed state
 			ScrollingAllowed = true;
 			honeyBar.StartParticles();
 		}
