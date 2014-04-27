@@ -11,23 +11,11 @@ public class ElectricGrid : MonoBehaviour {
 	public Color GlowColor = Color.cyan;
 	public float GlowSpeed;
 	public AnimationCurve GlowCurve;
-	
+
 	SpriteRenderer[][] cellsInSlices;
-	float animationTime = 0;
+	float animationTime;
 	
 	void Start() {
-		var collider = GetComponent<BoxCollider2D>();
-		if (!collider) {
-			collider = gameObject.AddComponent<BoxCollider2D>();
-			collider.isTrigger = true;
-		}
-		var rigidbody = GetComponent<Rigidbody2D>();
-		if (!rigidbody) {
-			rigidbody = gameObject.AddComponent<Rigidbody2D>();
-		}
-		collider.size = new Vector2(ElectricGridWidth * ElectricCellSize, ElectricGridHeight * ElectricCellSize);
-		collider.center = new Vector2((ElectricGridWidth - 1)/2f * ElectricCellSize, -(ElectricGridHeight - 1)/2f * ElectricCellSize);
-
 		//create cells and order them in a diagonal pattern
 		var numSlices = ElectricGridHeight + ElectricGridWidth - 1;
 		var smallerDim = Mathf.Min(ElectricGridHeight, ElectricGridWidth);

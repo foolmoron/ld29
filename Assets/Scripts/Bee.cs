@@ -7,12 +7,6 @@ public class Bee : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log("Trig");
-		Debug.Log(other);
-	}
 
-	void OnCollisionEnter2D(Collision2D collision) {
-		Debug.Log("Col");
-		Debug.Log(collision);
 	}
 }
