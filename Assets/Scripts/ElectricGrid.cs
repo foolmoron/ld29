@@ -77,6 +77,5 @@ public class ElectricGrid : MonoBehaviour {
 		Gizmos.DrawLine(
 			transform.position + new Vector3(0, -ElectricGridHeight * ElectricCellSize, 0) + offset, 
 			transform.position + new Vector3(ElectricGridWidth * ElectricCellSize, -ElectricGridHeight * ElectricCellSize, 0) + offset);
-
 	}
 }
