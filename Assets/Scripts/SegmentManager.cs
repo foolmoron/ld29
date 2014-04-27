@@ -19,6 +19,7 @@ public class SegmentManager : MonoBehaviour {
 	float segmentOpenTime = 1.5f;
 	float segmentCloseTime = 0.75f;
 
+	HoneyBar honeyBar;
 	FollowMouse followMouse;
 	
 	public bool ActionAllowed { get; private set; }
@@ -28,6 +29,7 @@ public class SegmentManager : MonoBehaviour {
 	void Start() {
 		segments = new List<Segment>(GetComponentsInChildren<Segment>());
 		Object.FindObjectOfType<InputManager>().RegisterForRightClicks(gameObject);
+		honeyBar = Object.FindObjectOfType<HoneyBar>();
 		followMouse = Object.FindObjectOfType<FollowMouse>();
 		
 		foreach (var slidable in GetComponentsInChildren<Slidable>()) {
@@ -109,6 +111,7 @@ public class SegmentManager : MonoBehaviour {
 			}
 			StartCoroutine(WaitForAnimation(segmentOpenTime));
 			ScrollingAllowed = false;
+			honeyBar.StopParticles();
 			foreach (var electricGrid in GetComponentsInChildren<ElectricGrid>()) {
 				electricGrid.TurnOff();
 			}
@@ -128,6 +131,7 @@ public class SegmentManager : MonoBehaviour {
 		ActionAllowed = true;
 		if (!IsOpen) {
 			ScrollingAllowed = true;
+			honeyBar.StartParticles();
 		}
 	}
 }
