@@ -11,6 +11,11 @@ public class SegmentManager : MonoBehaviour {
 	public float MaxScrollSpeed = 10;
 	public float HoneyModifier = 0.1f;
 
+	public GameObject FireflyPrefab;
+	public float FireflyTopLaneY = 1.75f;
+	public float FireflyBottomLaneY = -1.75f;
+	List<GameObject> fireflies = new List<GameObject>();
+
 	List<Segment> segments;
 	List<Segment> segmentsToKill = new List<Segment>();
 	float segmentGap = 3.2f;
@@ -53,6 +58,11 @@ public class SegmentManager : MonoBehaviour {
 				if (segment.transform.localPosition.x < segmentPositionKillLimit)
 					segmentsToKill.Add(segment);
 			}
+
+			fireflies.RemoveAll(obj => obj == null);
+			foreach (var firefly in fireflies) {
+				firefly.transform.Translate(-ScrollSpeed * Time.deltaTime, 0, 0);
+			}
 			
 			if (rightmostSegmentPos.x <= segmentPositionSpawnLimit) {
 				GameObject newSegmentObj = (GameObject) Instantiate(SegmentPrefabs[Mathf.FloorToInt(Random.value * SegmentPrefabs.Length)]);
@@ -61,6 +71,10 @@ public class SegmentManager : MonoBehaviour {
 				
 				Segment newSegment = newSegmentObj.GetComponent<Segment>();
 				segments.Add(newSegment);
+
+				var fireflyY = (Random.value < 0.5f) ? FireflyTopLaneY: FireflyBottomLaneY;
+				var newFirefly = (GameObject) Instantiate(FireflyPrefab, new Vector3(newSegment.transform.position.x, fireflyY), Quaternion.identity);
+				fireflies.Add(newFirefly);
 			}
 
 			honeyBar.AddHoney(ScrollSpeed * Time.deltaTime * HoneyModifier);
