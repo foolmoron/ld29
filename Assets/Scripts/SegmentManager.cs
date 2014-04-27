@@ -36,9 +36,6 @@ public class SegmentManager : MonoBehaviour {
 		foreach (var rotatable in GetComponentsInChildren<Rotatable>()) {
 			rotatable.enabled = false;
 		}
-
-		ActionAllowed = true;
-		IsOpen = false;
 	}
 
 	void Update() {
@@ -76,10 +73,12 @@ public class SegmentManager : MonoBehaviour {
 	}
 
 	public void StartScrolling() {
+		ActionAllowed = true;
 		ScrollingAllowed = true;
 	}
 
 	public void StopScrolling() {
+		ActionAllowed = false;
 		ScrollingAllowed = false;
 	}
 

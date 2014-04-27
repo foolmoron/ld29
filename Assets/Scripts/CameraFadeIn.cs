@@ -1,38 +1,64 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class CameraFadeIn : MonoBehaviour {
 
 	public SpriteRenderer OverlaySprite;
-	public float FadeInTime = 2f;
+	public float FadeTime = 0.5f;
 
 	SegmentManager segmentManager;
-	float fadeTime = 0f;
+
+	bool fading = true;
+	float startAlpha;
+	float endAlpha;
+	Action afterFade;
+	float fadeTime;
 
 	void Start() {
-		segmentManager = Object.FindObjectOfType<SegmentManager>();
-		segmentManager.StopScrolling();
+		segmentManager = UnityEngine.Object.FindObjectOfType<SegmentManager>();
 
+		segmentManager.StopScrolling();
+		FadeIn(() => {
+			OverlaySprite.gameObject.SetActive(false);
+			segmentManager.StartScrolling();
+		});
+	}
+	
+	public void FadeOut(Action afterFadeOut) {
+		startAlpha = 0;
+		endAlpha = 1;
+		fadeTime = 0;
 		OverlaySprite.gameObject.SetActive(true);
-		var currentColor = OverlaySprite.color;
-		currentColor.a = 1;
-		OverlaySprite.color = currentColor;
+		fading = true;
+		afterFade = afterFadeOut;
+	}
+	
+	public void FadeIn(Action afterFadeIn) {
+		startAlpha = 1;
+		endAlpha = 0;
+		fadeTime = 0;
+		OverlaySprite.gameObject.SetActive(true);
+		fading = true;
+		afterFade = afterFadeIn;
 	}
 
 	void Update() {
-		fadeTime += Time.deltaTime;
-		var interp = fadeTime / FadeInTime;
-		if (interp > 1) {
-			OverlaySprite.gameObject.SetActive(false);
-			segmentManager.StartScrolling();
+		if (!fading)
+			return;
 
-			enabled = false;
+		fadeTime += Time.deltaTime;
+		var interp = fadeTime / FadeTime;
+		if (interp > 1) {
+			if (afterFade != null)
+				afterFade();
+			fading = false;
 			return;
 		}
 
 		var currentColor = OverlaySprite.color;
-		currentColor.a = Mathf.Lerp(1, 0, interp);
+		currentColor.a = Mathf.Lerp(startAlpha, endAlpha, interp);
 		OverlaySprite.color = currentColor;
 	}
 }
