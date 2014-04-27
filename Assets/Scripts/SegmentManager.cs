@@ -9,6 +9,7 @@ public class SegmentManager : MonoBehaviour {
 	public float ScrollSpeed = 1;
 	public float ScrollAcceleration = 0.1f;
 	public float MaxScrollSpeed = 10;
+	public float HoneyModifier = 0.1f;
 
 	List<Segment> segments;
 	List<Segment> segmentsToKill = new List<Segment>();
@@ -61,7 +62,9 @@ public class SegmentManager : MonoBehaviour {
 				Segment newSegment = newSegmentObj.GetComponent<Segment>();
 				segments.Add(newSegment);
 			}
-			
+
+			honeyBar.AddHoney(ScrollSpeed * Time.deltaTime * HoneyModifier);
+
 			ScrollSpeed += ScrollAcceleration * Time.deltaTime;
 			if (ScrollSpeed >= MaxScrollSpeed)
 				ScrollSpeed = MaxScrollSpeed;

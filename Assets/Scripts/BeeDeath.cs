@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class BeeDeath : MonoBehaviour {
 
-	public GameObject[] ActivateOnDeath;
+	public GameObject[] CreateOnDeath;
 	public bool Dying {get; private set;}
 	
 	CameraFadeIn cameraFadeIn;
@@ -40,8 +40,12 @@ public class BeeDeath : MonoBehaviour {
 		segmentManager.StopScrolling();
 		iTween.Stop(followMouse.gameObject);
 		followMouse.enabled = false;
-		foreach (var obj in ActivateOnDeath) {
-			obj.SetActive(true);
+		foreach (var obj in CreateOnDeath) {
+			var newObj = (GameObject) Instantiate(obj, transform.position, transform.rotation);
+			newObj.transform.parent = transform.parent;
+			var currentPos = newObj.transform.localPosition;
+			currentPos.z = -2;
+			newObj.transform.localPosition = currentPos;
 		}
 		foreach (var animator in animators) {
 			animator.Play("Dead");

@@ -6,6 +6,7 @@ public class HoneyBar : MonoBehaviour {
 
 	public SpriteRenderer HoneyFill;
 	public GameObject HoneyBarParticles;
+	public GameObject HoneyBarFireflies;
 	
 	public float HoneyLevel = 0f;
 	public int HoneyJars = 0;
@@ -23,6 +24,7 @@ public class HoneyBar : MonoBehaviour {
 	GameObject[] level4Jars = new GameObject[5];
 
 	void Start() {
+		DisableBoost();
 	}
 
 	void Update() {
@@ -120,6 +122,14 @@ public class HoneyBar : MonoBehaviour {
 
 	public void StartParticles() {
 		HoneyBarParticles.particleSystem.enableEmission = true;
+	}
+	
+	public void DisableBoost() {
+		HoneyBarFireflies.particleSystem.enableEmission = false;
+	}
+
+	public void EnableBoost() {
+		HoneyBarFireflies.particleSystem.enableEmission = true;
 	}
 
 	void OnDrawGizmos() {
