@@ -139,9 +139,10 @@ public class SegmentManager : MonoBehaviour {
 				rotatable.enabled = true;
 			}
 		}
-		ActionAllowed = false;
-		if (!IsOpen) // go into open state instantly
-			IsOpen = true;
+		if (IsOpen)
+			ActionAllowed = false; // allow closing during opening animation
+		if (!IsOpen)
+			IsOpen = true; // go into open state instantly
 	}
 
 	IEnumerator WaitForAnimation(float seconds, bool closing) {
