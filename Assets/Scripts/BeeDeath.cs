@@ -47,13 +47,10 @@ public class BeeDeath : MonoBehaviour {
 			animator.Play("Dead");
 		}
 
-		StartCoroutine(WaitForFadeout(2f));
-	}
-
-	IEnumerator WaitForFadeout(float seconds) {
-		yield return new WaitForSeconds(seconds);		
-		cameraFadeIn.FadeOut(() => {
-			Application.LoadLevel(Application.loadedLevel);
-		});
+		StartCoroutine(Util.PerformActionWithDelay(2f,() => {		
+			cameraFadeIn.FadeOut(() => {
+				Application.LoadLevel(Application.loadedLevel);
+			});
+		}));
 	}
 }

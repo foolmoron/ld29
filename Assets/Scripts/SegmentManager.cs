@@ -92,6 +92,9 @@ public class SegmentManager : MonoBehaviour {
 				segment.Close(segmentCloseTime);
 			}
 			StartCoroutine(WaitForAnimation(segmentCloseTime));
+			foreach (var electricGrid in GetComponentsInChildren<ElectricGrid>()) {
+				electricGrid.TurnOn();
+			}
 			foreach (var slidable in GetComponentsInChildren<Slidable>()) {
 				slidable.enabled = false;
 			}
@@ -106,6 +109,9 @@ public class SegmentManager : MonoBehaviour {
 			}
 			StartCoroutine(WaitForAnimation(segmentOpenTime));
 			ScrollingAllowed = false;
+			foreach (var electricGrid in GetComponentsInChildren<ElectricGrid>()) {
+				electricGrid.TurnOff();
+			}
 			foreach (var slidable in GetComponentsInChildren<Slidable>()) {
 				slidable.enabled = true;
 			}
