@@ -26,9 +26,12 @@ public class SegmentManager : MonoBehaviour {
 	void Start() {
 		segments = new List<Segment>(GetComponentsInChildren<Segment>());
 		Object.FindObjectOfType<InputManager>().RegisterForRightClicks(gameObject);
-
+		
 		foreach (var slidable in GetComponentsInChildren<Slidable>()) {
 			slidable.enabled = false;
+		}
+		foreach (var rotatable in GetComponentsInChildren<Rotatable>()) {
+			rotatable.enabled = false;
 		}
 
 		ActionAllowed = true;
@@ -82,6 +85,9 @@ public class SegmentManager : MonoBehaviour {
 			foreach (var slidable in GetComponentsInChildren<Slidable>()) {
 				slidable.enabled = false;
 			}
+			foreach (var rotatable in GetComponentsInChildren<Rotatable>()) {
+				rotatable.enabled = false;
+			}
 		} else {
 			ScrollingAllowed = false;
 			foreach (var segment in segments) {
@@ -91,6 +97,9 @@ public class SegmentManager : MonoBehaviour {
 			ScrollingAllowed = false;
 			foreach (var slidable in GetComponentsInChildren<Slidable>()) {
 				slidable.enabled = true;
+			}
+			foreach (var rotatable in GetComponentsInChildren<Rotatable>()) {
+				rotatable.enabled = true;
 			}
 		}
 		ActionAllowed = false;
