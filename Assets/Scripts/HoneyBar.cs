@@ -23,9 +23,18 @@ public class HoneyBar : MonoBehaviour {
 	GameObject[] level2Jars = new GameObject[5];
 	GameObject[] level3Jars = new GameObject[5];
 	GameObject[] level4Jars = new GameObject[5];
+	
+	GUIText collectedText;
+	GUIText highscoreText;
+	float highscore;
 
 	void Start() {
 		DisableBoost();
+		
+		collectedText = GameObject.Find("Collected").GetComponent<GUIText>();
+		highscoreText = GameObject.Find("Highscore").GetComponent<GUIText>();
+
+		highscore = PlayerPrefs.GetFloat("highscore", 0);
 	}
 
 	void Update() {
@@ -42,6 +51,16 @@ public class HoneyBar : MonoBehaviour {
 		var currentParticlePosition = HoneyBarParticles.transform.position;
 		currentParticlePosition.y = topOfFill;
 		HoneyBarParticles.transform.position = currentParticlePosition;
+
+		var totalHoney = HoneyJars + HoneyLevel;
+		collectedText.text = "Collected " + totalHoney.ToString("0.00");
+
+		if (totalHoney >= highscore) {
+			highscoreText.color = Color.white;
+			highscore = totalHoney;
+			PlayerPrefs.SetFloat("highscore", totalHoney);
+		}
+		highscoreText.text = "High: " + highscore.ToString("0.00");
 	}
 
 	public void AddHoney(float honey) {

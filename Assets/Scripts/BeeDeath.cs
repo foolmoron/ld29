@@ -14,12 +14,15 @@ public class BeeDeath : MonoBehaviour {
 	Animator[] animators;
 	List<Collider2D> electricsInside = new List<Collider2D>();
 
+	GameObject text;
+
 	void Start() {
 		cameraFadeIn = Object.FindObjectOfType<CameraFadeIn>();
 		segmentManager = Object.FindObjectOfType<SegmentManager>();
 		beeGuard = transform.root.GetComponentInChildren<BeeGuard>();
 		followMouse = transform.root.GetComponentInChildren<FollowMouse>();
 		animators = transform.root.GetComponentsInChildren<Animator>();
+		text = GameObject.Find("Text");
 	}
 	
 	void OnTriggerEnter2D(Collider2D other) {
@@ -50,11 +53,16 @@ public class BeeDeath : MonoBehaviour {
 		foreach (var animator in animators) {
 			animator.Play("Dead");
 		}
-
-		StartCoroutine(Util.PerformActionWithDelay(2f,() => {		
-			cameraFadeIn.FadeOut(() => {
-				Application.LoadLevel(Application.loadedLevel);
-			});
+		
+		iTween.MoveTo(text, iTween.Hash(
+			"position", Vector3.zero,
+			"time", 2f,
+			"easeType", iTween.EaseType.easeOutElastic,
+			"isLocal", true
+		));
+		StartCoroutine(Util.PerformActionWithDelay(2f,() => {	
+			var cont = Object.FindObjectOfType<ClickToContinue>();
+			cont.enabled = true;
 		}));
 	}
 }

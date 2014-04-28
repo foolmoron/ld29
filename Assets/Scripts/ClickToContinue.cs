@@ -8,7 +8,9 @@ public class ClickToContinue : MonoBehaviour {
 	
 	void Update() {
 		if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) {
-			Application.LoadLevel(SceneToGoTo);
+			Object.FindObjectOfType<CameraFadeIn>().FadeOut(() => {
+				Application.LoadLevel(SceneToGoTo);
+			});
 		}
 	}
 }
