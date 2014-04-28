@@ -19,11 +19,13 @@ public class CameraFadeIn : MonoBehaviour {
 	void Start() {
 		segmentManager = UnityEngine.Object.FindObjectOfType<SegmentManager>();
 
-		segmentManager.StopScrolling();
-		FadeIn(() => {
-			OverlaySprite.gameObject.SetActive(false);
-			segmentManager.StartScrolling();
-		});
+		if (segmentManager) {
+			segmentManager.StopScrolling();
+			FadeIn(() => {
+				OverlaySprite.gameObject.SetActive(false);
+				segmentManager.StartScrolling();
+			});
+		}
 	}
 	
 	public void FadeOut(Action afterFadeOut) {
