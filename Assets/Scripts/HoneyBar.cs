@@ -10,6 +10,7 @@ public class HoneyBar : MonoBehaviour {
 	
 	public float HoneyLevel = 0f;
 	public int HoneyJars = 0;
+	public bool IsBoosted {get; private set;}
 
 	public Vector2 JarBasePosition = new Vector2(-0.35f, -1.15f); 
 	public float JarSize = 0.18f;
@@ -44,6 +45,8 @@ public class HoneyBar : MonoBehaviour {
 	}
 
 	public void AddHoney(float honey) {
+		if (IsBoosted)
+			honey *= 2;
 		HoneyLevel += honey;
 	}
 
@@ -125,10 +128,12 @@ public class HoneyBar : MonoBehaviour {
 	}
 	
 	public void DisableBoost() {
+		IsBoosted = false;
 		HoneyBarFireflies.particleSystem.enableEmission = false;
 	}
 
 	public void EnableBoost() {
+		IsBoosted = true;
 		HoneyBarFireflies.particleSystem.enableEmission = true;
 	}
 
